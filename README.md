@@ -29,6 +29,16 @@ ID | meaning
 2 | RUNNING
 3 | DONE
 
+## Config
 
+Configuration is done before compilation!
 
+Please edit `config.h` file to configure the program.
 
+## Compiling
+
+1. Make sure to have libcurl installed
+
+1. Run
+
+    `make`
