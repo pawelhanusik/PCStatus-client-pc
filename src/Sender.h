@@ -26,7 +26,6 @@ public:
 
 class CurlSender : public Sender {
 private:
-    CURL *curl;
     static bool wasGlobalInit;
 
     static size_t curlWriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp);
