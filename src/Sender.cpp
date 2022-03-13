@@ -1,5 +1,4 @@
 #include "Sender.h"
-#include <iostream>
 
 // https://curl.se/libcurl/c/http-post.html
 bool CurlSender::wasGlobalInit = false;
@@ -54,7 +53,6 @@ Response CurlSender::sendPost(
     curl_easy_setopt(curl, CURLOPT_POSTFIELDS, postfields.c_str());
 
     if (token != NULL) {
-        std::cout << "Adding token=" << *token << std::endl;
         curl_easy_setopt(curl, CURLOPT_XOAUTH2_BEARER, (*token).c_str());
         curl_easy_setopt(curl, CURLOPT_HTTPAUTH, CURLAUTH_BEARER);
     }
