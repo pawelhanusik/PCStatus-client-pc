@@ -17,7 +17,11 @@ struct Response {
 
 class Sender {
 public:
-    virtual Response sendPost(const std::string &url, const std::string &postfields) = 0;
+    virtual Response sendPost(
+        const std::string &url,
+        const std::string &postfields,
+        const std::string *token = NULL
+    ) = 0;
 };
 
 class CurlSender : public Sender {
@@ -30,5 +34,9 @@ public:
     CurlSender();
     ~CurlSender();
 
-    Response sendPost(const std::string &url, const std::string &postfields);
+    Response sendPost(
+        const std::string &url,
+        const std::string &postfields,
+        const std::string *token = NULL
+    );
 };

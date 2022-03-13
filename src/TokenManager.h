@@ -12,7 +12,7 @@ public:
     TokenManager();
     ~TokenManager();
     void setToken(std::string token);
-    std::string getToken();
+    const std::string* getToken();
     bool hasToken();
 private:
 #ifndef USE_CONFIG_TOKEN

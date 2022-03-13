@@ -15,8 +15,12 @@ TokenManager::~TokenManager() {
 void TokenManager::setToken(std::string token) {
     this->token = token;
 }
-std::string TokenManager::getToken() {
-    return this->token;
+const std::string* TokenManager::getToken() {
+    if (!this->hasToken()) {
+        return NULL;
+    }
+    
+    return &this->token;
 }
 
 bool TokenManager::hasToken() {

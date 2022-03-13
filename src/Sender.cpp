@@ -1,4 +1,5 @@
 #include "Sender.h"
+#include <iostream>
 
 // https://curl.se/libcurl/c/http-post.html
 bool CurlSender::wasGlobalInit = false;
@@ -33,7 +34,12 @@ size_t CurlSender::curlWriteMemoryCallback(void *contents, size_t size, size_t n
 
     return realsize;
 }
-Response CurlSender::sendPost(const std::string &url, const std::string &postfields) {
+Response CurlSender::sendPost(
+    const std::string &url,
+    const std::string &postfields,
+    const std::string *token
+) {
+    std::cout << "sendPost() " << url << "\t" << postfields << std::endl;
     Response response;
     
     if(!this->curl) {
@@ -46,6 +52,11 @@ Response CurlSender::sendPost(const std::string &url, const std::string &postfie
 
     curl_easy_setopt(this->curl, CURLOPT_URL, url.c_str());
     curl_easy_setopt(this->curl, CURLOPT_POSTFIELDS, postfields.c_str());
+
+    if (token != NULL) {
+        curl_easy_setopt(this->curl, CURLOPT_XOAUTH2_BEARER, (*token).c_str());
+        curl_easy_setopt(this->curl, CURLOPT_HTTPAUTH, CURLAUTH_BEARER);
+    }
     
     curl_easy_setopt(this->curl, CURLOPT_VERBOSE, 0L);
     curl_easy_setopt(this->curl, CURLOPT_WRITEFUNCTION, CurlSender::curlWriteMemoryCallback);
@@ -65,6 +76,8 @@ Response CurlSender::sendPost(const std::string &url, const std::string &postfie
 
     curl_easy_cleanup(this->curl);
     
+    std::cout << "HTTP code: " << response.code << std::endl;
+
     response.success = (res == CURLE_OK);
     return response;
 }

@@ -19,10 +19,10 @@ namespace Config {
     *    and store the token in specified file
     */
 
-// #define USE_CONFIG_TOKEN
+#define USE_CONFIG_TOKEN
 
 #ifdef USE_CONFIG_TOKEN
-    static std::string token = "";
+    static std::string token = "60|MEJBtCftcOR5yBUC7nBU3GneQ7MpfsExEFx2VEdP";
 #else
     static std::string username = "user";
     static std::string password = "password";

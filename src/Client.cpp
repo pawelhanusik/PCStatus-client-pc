@@ -40,7 +40,8 @@ bool Client::login() {
 bool Client::create(Model *model) {
     Response response = this->sender.sendPost(
         Config::serverAddress + "api/" + model->getUrl(),
-        model->getCreatePostfields()
+        model->getCreatePostfields(),
+        this->tokenManager.getToken()
     );
     return response.success;
 }
@@ -48,7 +49,8 @@ bool Client::create(Model *model) {
 bool Client::update(Model *model) {
     Response response = this->sender.sendPost(
         Config::serverAddress + "api/" + model->getUrl() + "/" + std::to_string(model->id),
-        model->getUpdatePostfields()
+        model->getUpdatePostfields(),
+        this->tokenManager.getToken()
     );
     return response.success;
 }
