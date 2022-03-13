@@ -17,20 +17,8 @@ CurlSender::~CurlSender() {
 }
 size_t CurlSender::curlWriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp) {
     size_t realsize = size * nmemb;
-    struct MemoryStruct *mem = (struct MemoryStruct *)userp;
-
-    char *ptr = (char*)realloc(mem->memory, mem->size + realsize + 1);
-    if(!ptr) {
-        /* out of memory! */
-        printf("not enough memory (realloc returned NULL)\n");
-        return 0;
-    }
-
-    mem->memory = ptr;
-    std::memcpy(&(mem->memory[mem->size]), contents, realsize);
-    mem->size += realsize;
-    mem->memory[mem->size] = 0;
-
+    struct Response *response = (struct Response *)userp;
+    response->message = std::string((char*)contents);
     return realsize;
 }
 Response CurlSender::sendPost(
@@ -46,9 +34,6 @@ Response CurlSender::sendPost(
         return response;
     }
 
-    response.memoryStruct.memory = (char*)malloc(1);
-    response.memoryStruct.size = 0;
-
     curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
     curl_easy_setopt(curl, CURLOPT_POSTFIELDS, postfields.c_str());
 
@@ -59,7 +44,7 @@ Response CurlSender::sendPost(
     
     curl_easy_setopt(curl, CURLOPT_VERBOSE, 0L);
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, CurlSender::curlWriteMemoryCallback);
-    curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&response.memoryStruct);
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&response);
 
     CURLcode res = curl_easy_perform(curl);
     

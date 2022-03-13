@@ -28,7 +28,7 @@ bool Client::login() {
 
     if (response.code == 200) {
         this->tokenManager.setToken(
-            std::string(response.memoryStruct.memory)
+            std::string(response.message)
         );
     } else {
         Logger::errorAndExit("Error: Invalid credentials.");

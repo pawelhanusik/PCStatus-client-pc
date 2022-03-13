@@ -4,15 +4,10 @@
 #include <string>
 #include <cstring>
 
-struct MemoryStruct {
-    char *memory;
-    std::string xd;
-    size_t size;
-};
 struct Response {
     bool success;
     long code;
-    MemoryStruct memoryStruct;
+    std::string message;
 };
 
 class Sender {
