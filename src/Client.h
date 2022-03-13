@@ -1,10 +1,11 @@
 #pragma once
 
 #include "config.h"
-#include "models.h"
+#include "User.h"
 #include "Logger.h"
 #include "Sender.h"
 #include "TokenManager.h"
+#include "models/Model.h"
 
 class Client {
 private:
@@ -16,4 +17,6 @@ public:
     ~Client();
 
     bool login();
+    bool create(Model *model);
+    bool update(Model *model);
 };
