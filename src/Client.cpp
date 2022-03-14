@@ -3,15 +3,10 @@
 Client::Client(CurlSender sender)
     :sender(sender)
 {
-#ifdef USE_CONFIG_TOKEN
-    // token is already loaded from config by TokenManager
-#else
+#ifndef USE_CONFIG_TOKEN
     if (!this->tokenManager.hasToken()) {
         this->login();
     }
-
-    this->user.username = Config::username;
-    this->user.password = Config::password;
 #endif
 }
 
@@ -23,7 +18,7 @@ Client::~Client() {
 bool Client::login() {
     Response response = this->sender.sendPost(
         Config::serverAddress + "api/user/login",
-        "username=" + this->user.username + "&password=" + this->user.password
+        "username=" + Config::username + "&password=" + Config::password
     );
 
     if (response.code == 200) {

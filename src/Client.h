@@ -1,7 +1,6 @@
 #pragma once
 
 #include "config.h"
-#include "User.h"
 #include "Logger.h"
 #include "Sender.h"
 #include "TokenManager.h"
@@ -10,7 +9,6 @@
 class Client {
 private:
     CurlSender sender;
-    User user;
     TokenManager tokenManager;
 public:
     Client(CurlSender sender);
