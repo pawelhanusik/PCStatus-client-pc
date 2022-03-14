@@ -5,7 +5,6 @@ Client::Client(CurlSender sender)
 {
 #ifdef USE_CONFIG_TOKEN
     // token is already loaded from config by TokenManager
-    this->user.isLoggedIn = true;
 #else
     if (!this->tokenManager.hasToken()) {
         this->login();
