@@ -46,7 +46,7 @@ bool Client::create(Model *model, bool retryOnUnauthorized) {
 #else
         if (retryOnUnauthorized) {
             this->login();
-            this->create(model, false);
+            return this->create(model, false);
         } else {
             Logger::errorAndExit("Error: Invalid credentials.");
         }
@@ -71,7 +71,7 @@ bool Client::update(Model *model, bool retryOnUnauthorized) {
 #else
         if (retryOnUnauthorized) {
             this->login();
-            this->update(model, false);
+            return this->update(model, false);
         } else {
             Logger::errorAndExit("Error: Invalid credentials.");
         }
