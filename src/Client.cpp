@@ -33,7 +33,7 @@ bool Client::login() {
 }
 #endif
 
-bool Client::create(Model *model, bool retryOnUnauthorized) {
+bool Client::create(const Model *model, bool retryOnUnauthorized) {
     Response response = this->sender.sendPost(
         Config::serverAddress + "api/" + model->getUrl(),
         model->getCreatePostfields(),
@@ -58,7 +58,7 @@ bool Client::create(Model *model, bool retryOnUnauthorized) {
     return response.success;
 }
 
-bool Client::update(Model *model, bool retryOnUnauthorized) {
+bool Client::update(const Model *model, bool retryOnUnauthorized) {
     Response response = this->sender.sendPost(
         Config::serverAddress + "api/" + model->getUrl() + "/" + std::to_string(model->id),
         model->getUpdatePostfields(),

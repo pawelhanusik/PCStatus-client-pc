@@ -11,12 +11,12 @@ private:
 public:
     TokenManager();
     ~TokenManager();
-    void setToken(std::string token);
-    const std::string* getToken();
-    bool hasToken();
+    void setToken(const std::string& token);
+    const std::string* getToken() const;
+    bool hasToken() const;
 private:
 #ifndef USE_CONFIG_TOKEN
     void loadToken();
-    void saveToken();
+    void saveToken() const;
 #endif
 };

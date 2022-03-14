@@ -21,7 +21,7 @@ size_t CurlSender::curlWriteMemoryCallback(void *contents, size_t size, size_t n
     response->message = std::string((char*)contents);
     return realsize;
 }
-Response CurlSender::sendPost(
+const Response CurlSender::sendPost(
     const std::string &url,
     const std::string &postfields,
     const std::string *token

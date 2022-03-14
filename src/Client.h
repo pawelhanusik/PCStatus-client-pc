@@ -14,8 +14,8 @@ public:
     Client(CurlSender sender);
     ~Client();
 
-    bool create(Model *model, bool retryOnUnauthorized = true);
-    bool update(Model *model, bool retryOnUnauthorized = true);
+    bool create(const Model *model, bool retryOnUnauthorized = true);
+    bool update(const Model *model, bool retryOnUnauthorized = true);
 private:
 #ifndef USE_CONFIG_TOKEN
     bool login();

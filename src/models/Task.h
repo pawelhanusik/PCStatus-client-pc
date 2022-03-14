@@ -16,20 +16,20 @@ public:
     TaskStatus status;
     std::string message;
 
-    std::string getUrl() {
+    const std::string getUrl() const {
         return "task";
     }
-    std::string getCreatePostfields() {
+    const std::string getCreatePostfields() const {
         return "title=" + this->title + 
             "&message=" + this->message +
             "&status=" + this->getStatusAsString();
     }
-    std::string getUpdatePostfields() {
+    const std::string getUpdatePostfields() const {
         return "status=" + this->getStatusAsString();
     }
 
 private:
-    std::string getStatusAsString() {
+    const std::string getStatusAsString() const {
         switch (this->status) {
         case TaskStatus::CREATED:
             return "created";

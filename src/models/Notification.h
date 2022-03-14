@@ -8,10 +8,10 @@ public:
     std::string title;
     std::string message;
     
-    std::string getUrl() {
+    const std::string getUrl() const {
         return "notification";
     }
-    std::string getCreatePostfields() {
+    const std::string getCreatePostfields() const {
         return "title=" + this->title + 
             "&message=" + this->message;
     }

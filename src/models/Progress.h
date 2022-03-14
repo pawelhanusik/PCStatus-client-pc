@@ -10,16 +10,16 @@ public:
     int progress_max = 100;
     std::string message;
 
-    std::string getUrl() {
+    const std::string getUrl() const {
         return "progress";
     }
-    std::string getCreatePostfields() {
+    const std::string getCreatePostfields() const {
         return "title=" + this->title + 
             "&message=" + this->message +
             "&progress=" + std::to_string(this->progress) +
             "&progress_max=" + std::to_string(this->progress_max);
     }
-    std::string getUpdatePostfields() {
+    const std::string getUpdatePostfields() const {
         return "progress=" + std::to_string(this->progress);
     }
 };

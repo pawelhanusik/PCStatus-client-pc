@@ -12,10 +12,10 @@ TokenManager::~TokenManager() {
     this->saveToken();
 #endif
 }
-void TokenManager::setToken(std::string token) {
+void TokenManager::setToken(const std::string& token) {
     this->token = token;
 }
-const std::string* TokenManager::getToken() {
+const std::string* TokenManager::getToken() const {
     if (!this->hasToken()) {
         return NULL;
     }
@@ -23,7 +23,7 @@ const std::string* TokenManager::getToken() {
     return &this->token;
 }
 
-bool TokenManager::hasToken() {
+bool TokenManager::hasToken() const {
     return (this->token.length() > 0);
 }
 
@@ -33,7 +33,7 @@ void TokenManager::loadToken() {
     file_in >> this->token;
     file_in.close();
 }
-void TokenManager::saveToken() {
+void TokenManager::saveToken() const {
     std::ofstream file_out(Config::tokenStoragePath);
     file_out << this->token;
     file_out.close();
