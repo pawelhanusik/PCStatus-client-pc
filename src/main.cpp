@@ -17,7 +17,10 @@ void printHelp() {
     exit(2);
 }
 
-
+enum Operation {
+    CREATE,
+    UPDATE
+};
 enum ModelType {
     UNKNOWN,
     NOTIFICATION,
@@ -44,8 +47,21 @@ ModelType getModelTypeFromArgs(int argc, char *argv[]) {
     }
 }
 
+Operation getOperationFromArgs(int argc, char *argv[]) {
+    if (
+        argc > 2
+        && argv[2][0] == '-'
+        && argv[2][1] == 'u'
+    ) {
+        return Operation::UPDATE;
+    }
+
+    return Operation::CREATE;
+}
+
 int main(int argc, char *argv[]) {
     ModelType type = getModelTypeFromArgs(argc, argv);
+    Operation operation = getOperationFromArgs(argc, argv);
 
     if (type == ModelType::UNKNOWN) {
         printf("Unrecognized type.\n");
@@ -56,44 +72,70 @@ int main(int argc, char *argv[]) {
     CurlSender sender;
     Client client(sender);
     
-    if (type == ModelType::NOTIFICATION) {
-        if (argc < 4) {
-            printHelp();
-            return 2;
-        }
-        
-        Notification model;
-        model.title = argv[2];
-        model.message = argv[3];
+    if (operation == Operation::CREATE) {
+        if (type == ModelType::NOTIFICATION) {
+            if (argc < 4) {
+                printHelp();
+                return 2;
+            }
+            
+            Notification model;
+            model.title = argv[2];
+            model.message = argv[3];
 
-        client.create(&model);
-    } else if (type == ModelType::PROGRESS) {
-        if (argc < 5) {
-            printHelp();
-            return 2;
-        }
-        
-        Progress model;
-        model.title = argv[2];
-        model.message = argv[3];
-        model.progress = atoi(argv[4]);
-        if (argc >= 6) {
-            model.progress_max = atoi(argv[5]);
-        }
+            client.create(&model);
+        } else if (type == ModelType::PROGRESS) {
+            if (argc < 5) {
+                printHelp();
+                return 2;
+            }
+            
+            Progress model;
+            model.title = argv[2];
+            model.message = argv[3];
+            model.progress = atoi(argv[4]);
+            if (argc >= 6) {
+                model.progress_max = atoi(argv[5]);
+            }
 
-        client.create(&model);
-    } else if (type == ModelType::TASK) {
-        if (argc < 5) {
-            printHelp();
-            return 2;
-        }
-        
-        Task model;
-        model.title = argv[2];
-        model.message = argv[3];
-        model.status = (TaskStatus)atoi(argv[4]);
+            client.create(&model);
+        } else if (type == ModelType::TASK) {
+            if (argc < 5) {
+                printHelp();
+                return 2;
+            }
+            
+            Task model;
+            model.title = argv[2];
+            model.message = argv[3];
+            model.status = (TaskStatus)atoi(argv[4]);
 
-        client.create(&model);
+            client.create(&model);
+        }
+    } else if (operation == Operation::UPDATE) {
+        if (type == ModelType::PROGRESS) {
+            if (argc < 4) {
+                printHelp();
+                return 2;
+            }
+            
+            Progress model;
+            model.id = atoi(argv[3]);
+            model.progress = atoi(argv[4]);
+
+            client.update(&model);
+        } else if (type == ModelType::TASK) {
+            if (argc < 5) {
+                printHelp();
+                return 2;
+            }
+            
+            Task model;
+            model.id = atoi(argv[3]);
+            model.status = (TaskStatus)atoi(argv[4]);
+
+            client.update(&model);
+        }
     }
     
     return 0;

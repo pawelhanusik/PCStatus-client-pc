@@ -8,17 +8,18 @@ pcstatus [type] [data]...
 
 ### types
 
-- Notification
-
+- Notification  
 ```pcstatus n [title] [message]```
 
-- Progress
+- Progress  
+```pcstatus p [title] [message] [progress] <progress_max>```  
+Update  
+```pcstatus p -u [id] [progress]```
 
-```pcstatus p [title] [message] [progress] <progress_max>```
-
-- Task
-
+- Task  
 ```pcstatus t [title] [message] [task_status]```
+Update  
+```pcstatus t -u [id] [task_status]```
 
 Task Statuses:
 

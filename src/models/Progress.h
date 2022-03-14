@@ -4,7 +4,6 @@
 
 class Progress : public Model {
 public:
-    int id;
     std::string title;
     int progress;
     int progress_max = 100;

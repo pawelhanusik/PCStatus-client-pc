@@ -11,7 +11,6 @@ enum TaskStatus {
 
 class Task : public Model {
 public:
-    int id;
     std::string title;
     TaskStatus status;
     std::string message;

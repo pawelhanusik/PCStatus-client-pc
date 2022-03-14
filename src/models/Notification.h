@@ -4,7 +4,6 @@
 
 class Notification : public Model {
 public:
-    int id;
     std::string title;
     std::string message;
     
