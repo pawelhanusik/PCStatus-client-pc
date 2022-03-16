@@ -18,7 +18,7 @@ Client::~Client() {
 bool Client::login() {
     Response response = this->sender.sendPost(
         Config::serverAddress + "api/user/login",
-        "username=" + Config::username + "&password=" + Config::password
+        "username=" + Config::username + "&password=" + Config::password + "&token_name=" + Config::device_name
     );
 
     if (response.code == 200) {
