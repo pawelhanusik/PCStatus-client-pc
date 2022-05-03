@@ -17,18 +17,18 @@ Update
 ```pcstatus p -u [id] [progress]```
 
 - Task  
-```pcstatus t [title] [message] [task_status]```
+```pcstatus t [title] [message] [task_status]```  
 Update  
 ```pcstatus t -u [id] [task_status]```
 
 Task Statuses:
 
-ID | meaning
---- | ---
-0 | CREATED
-1 | STARTED
-2 | RUNNING
-3 | DONE
+ ID | meaning
+----|---------
+  0 | CREATED
+  1 | STARTED
+  2 | RUNNING
+  3 | DONE
 
 ## Config
 
