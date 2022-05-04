@@ -33,7 +33,7 @@ bool Client::login() {
 }
 #endif
 
-bool Client::create(const Model *model, bool retryOnUnauthorized) {
+Response Client::create(const Model *model, bool retryOnUnauthorized) {
     Response response = this->sender.sendPost(
         Config::serverAddress + "api/" + model->getUrl(),
         model->getCreatePostfields(),
@@ -55,7 +55,7 @@ bool Client::create(const Model *model, bool retryOnUnauthorized) {
         Logger::error("Error: HTML code: " + std::to_string(response.code));
     }
 
-    return response.success;
+    return response;
 }
 
 bool Client::update(const Model *model, bool retryOnUnauthorized) {

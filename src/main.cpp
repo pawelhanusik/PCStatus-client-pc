@@ -3,6 +3,7 @@
 
 #include "config.h"
 #include "Client.h"
+#include "Sender.h"
 #include "Logger.h"
 
 #include "models/Model.h"
@@ -73,6 +74,8 @@ int main(int argc, char *argv[]) {
     Client client(sender);
     
     if (operation == Operation::CREATE) {
+        Response response;
+
         if (type == ModelType::NOTIFICATION) {
             if (argc < 4) {
                 printHelp();
@@ -83,7 +86,7 @@ int main(int argc, char *argv[]) {
             model.title = argv[2];
             model.message = argv[3];
 
-            client.create(&model);
+            response = client.create(&model);
         } else if (type == ModelType::PROGRESS) {
             if (argc < 5) {
                 printHelp();
@@ -98,7 +101,7 @@ int main(int argc, char *argv[]) {
                 model.progress_max = atoi(argv[5]);
             }
 
-            client.create(&model);
+            response = client.create(&model);
         } else if (type == ModelType::TASK) {
             if (argc < 5) {
                 printHelp();
@@ -110,7 +113,11 @@ int main(int argc, char *argv[]) {
             model.message = argv[3];
             model.status = (TaskStatus)atoi(argv[4]);
 
-            client.create(&model);
+            response = client.create(&model);
+        }
+
+        if (response.success) {
+            printf("%s\n", response.message.c_str());
         }
     } else if (operation == Operation::UPDATE) {
         if (type == ModelType::PROGRESS) {
