@@ -13,8 +13,33 @@
 
 using namespace std;
 
-void printHelp() {
-    printf("Help is not written yet...\n");
+void printHelp(char *executableName) {
+    printf("Usage: %s [type] [data]...\n", executableName);
+    
+    
+    printf("Types:\n");
+    
+    printf("\t- Notification\n");
+    printf("\t\t%s n [title] [message]\n", executableName);
+    
+    printf("\t- Progress\n");
+    printf("\t\t%s p [title] [message] [progress] <progress_max>\n", executableName);
+    printf("\t   update:\n");
+    printf("\t\t%s p -u [id] [progress]\n", executableName);
+    
+    printf("\t- Task\n");
+    printf("\t\t%s t [title] [message] [task_status]\n", executableName);
+    printf("\t   update:\n");
+    printf("\t\t%s t -u [id] [task_status]\n", executableName);
+
+    printf("Task Statuses:\n");
+    printf("\t ID | meaning\n");
+    printf("\t -- | -------\n");
+    printf("\t  0 | CREATED\n");
+    printf("\t  1 | STARTED\n");
+    printf("\t  2 | RUNNING\n");
+    printf("\t  3 | DONE\n");
+
     exit(2);
 }
 
@@ -31,7 +56,7 @@ enum ModelType {
 
 ModelType getModelTypeFromArgs(int argc, char *argv[]) {
     if (argc < 2) {
-        printHelp();
+        printHelp(argv[0]);
         return ModelType::UNKNOWN;
     }
 
@@ -66,7 +91,7 @@ int main(int argc, char *argv[]) {
 
     if (type == ModelType::UNKNOWN) {
         printf("Unrecognized type.\n");
-        printHelp();
+        printHelp(argv[0]);
         return 2;
     }
     
@@ -78,7 +103,7 @@ int main(int argc, char *argv[]) {
 
         if (type == ModelType::NOTIFICATION) {
             if (argc < 4) {
-                printHelp();
+                printHelp(argv[0]);
                 return 2;
             }
             
@@ -89,7 +114,7 @@ int main(int argc, char *argv[]) {
             response = client.create(&model);
         } else if (type == ModelType::PROGRESS) {
             if (argc < 5) {
-                printHelp();
+                printHelp(argv[0]);
                 return 2;
             }
             
@@ -104,7 +129,7 @@ int main(int argc, char *argv[]) {
             response = client.create(&model);
         } else if (type == ModelType::TASK) {
             if (argc < 5) {
-                printHelp();
+                printHelp(argv[0]);
                 return 2;
             }
             
@@ -122,7 +147,7 @@ int main(int argc, char *argv[]) {
     } else if (operation == Operation::UPDATE) {
         if (type == ModelType::PROGRESS) {
             if (argc < 4) {
-                printHelp();
+                printHelp(argv[0]);
                 return 2;
             }
             
@@ -133,7 +158,7 @@ int main(int argc, char *argv[]) {
             client.update(&model);
         } else if (type == ModelType::TASK) {
             if (argc < 5) {
-                printHelp();
+                printHelp(argv[0]);
                 return 2;
             }
             
